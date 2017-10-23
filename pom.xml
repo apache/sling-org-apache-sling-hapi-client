@@ -35,7 +35,7 @@
     <description>Sling client-side tools for HApi</description>
 
     <scm>
-        <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-hapi-client.git</conncetion>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-hapi-client.git</connection>
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-hapi-client.git</developerConnection>
         <url>https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-hapi-client.git</url>
     </scm>
