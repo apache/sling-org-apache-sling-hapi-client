@@ -17,19 +17,18 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.apache.sling</groupId>
         <artifactId>sling-bundle-parent</artifactId>
         <version>49</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <artifactId>org.apache.sling.hapi.client</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>Apache Sling Hypermedia API client-side tools</name>
     <description>Sling client-side tools for HApi</description>
@@ -39,7 +38,8 @@
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-hapi-client.git
         </developerConnection>
         <url>https://github.com/apache/sling-org-apache-sling-hapi-client.git</url>
-    </scm>
+      <tag>org.apache.sling.hapi.client-1.0.2</tag>
+  </scm>
 
     <properties>
         <sling.java.version>8</sling.java.version>
