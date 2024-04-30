@@ -43,13 +43,14 @@
 
     <properties>
         <sling.java.version>8</sling.java.version>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.14</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -111,7 +112,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.14</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
