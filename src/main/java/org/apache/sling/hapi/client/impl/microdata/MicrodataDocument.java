@@ -1,23 +1,26 @@
-/*******************************************************************************
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements. See the NOTICE file
+ * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership. The ASF licenses this file
+ * regarding copyright ownership.  The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
+ * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- ******************************************************************************/
-
+ */
 package org.apache.sling.hapi.client.impl.microdata;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 import org.apache.http.NameValuePair;
 import org.apache.sling.hapi.client.*;
@@ -25,10 +28,6 @@ import org.apache.sling.hapi.client.forms.internal.FormValues;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
 
 public class MicrodataDocument implements Document {
     private org.jsoup.nodes.Document jsoupDocument;
@@ -38,7 +37,6 @@ public class MicrodataDocument implements Document {
         this.jsoupDocument = Jsoup.parse(html, baseUrl);
         this.client = client;
     }
-
 
     @Override
     public Items link(String rel) throws ClientException {
@@ -106,7 +104,6 @@ public class MicrodataDocument implements Document {
         return items;
     }
 
-
     private class ItemImpl implements Item {
 
         private Element el;
@@ -153,7 +150,6 @@ public class MicrodataDocument implements Document {
             return new ItemsImpl(toItems(getProxy().el.select(selector)));
         }
 
-
         /* Private methods */
 
         private List<Item> selectProps(Element e, String name, List<Item> items) {
@@ -181,7 +177,7 @@ public class MicrodataDocument implements Document {
                 }
 
                 if (c.hasAttr("itemscope")) {
-                        continue;
+                    continue;
                 }
 
                 selectAllPropNames(c, items);
@@ -323,8 +319,6 @@ public class MicrodataDocument implements Document {
 
             throw new ClientException("The item is not a form");
         }
-
-
     }
 
     /**
@@ -417,5 +411,4 @@ public class MicrodataDocument implements Document {
             return items.get(0).submit(values);
         }
     }
-
 }

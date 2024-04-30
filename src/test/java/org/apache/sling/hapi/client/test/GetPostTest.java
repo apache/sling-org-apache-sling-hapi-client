@@ -1,26 +1,22 @@
-
-/*******************************************************************************
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements. See the NOTICE file
+ * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership. The ASF licenses this file
+ * regarding copyright ownership.  The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
+ * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- ******************************************************************************/
-
+ */
 package org.apache.sling.hapi.client.test;
-
-import static org.hamcrest.core.StringContains.containsString;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -42,6 +38,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import static org.hamcrest.core.StringContains.containsString;
+
 public class GetPostTest {
     private static final String GET_URL = "/test";
     private static final String GET_AUTH_URL = "/testauth";
@@ -56,34 +54,40 @@ public class GetPostTest {
 
         @Override
         protected void registerHandlers() {
-            serverBootstrap.registerHandler(GET_URL, new HttpRequestHandler() {
-                @Override
-                public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
-                        throws HttpException, IOException {
-                    httpResponse.setEntity(new StringEntity(OK_RESPONSE));
-                }
-            }).registerHandler(GET_AUTH_URL, new HttpRequestHandler() {
-                @Override
-                public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
-                        throws HttpException, IOException {
-                    Header[] headers = httpRequest.getHeaders("Authorization");
-                    if (null == headers || headers.length == 0 || !headers[0].getValue().equals(AUTH_STRING)) {
-                        httpResponse.setStatusCode(401);
-                        httpResponse.setHeader("WWW-Authenticate",  "Basic realm=\"TEST\"");
-                    } else {
-                        httpResponse.setEntity(new StringEntity(OK_RESPONSE));
-                    }
-                }
-            }).registerHandler(REDIRECT_URL, new HttpRequestHandler() {
-                @Override
-                public void handle(HttpRequest request, HttpResponse response, HttpContext context) throws HttpException, IOException {
-                    response.setStatusCode(307);
-                    response.setHeader("Location", GET_URL);
-                }
-            });
+            serverBootstrap
+                    .registerHandler(GET_URL, new HttpRequestHandler() {
+                        @Override
+                        public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
+                                throws HttpException, IOException {
+                            httpResponse.setEntity(new StringEntity(OK_RESPONSE));
+                        }
+                    })
+                    .registerHandler(GET_AUTH_URL, new HttpRequestHandler() {
+                        @Override
+                        public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
+                                throws HttpException, IOException {
+                            Header[] headers = httpRequest.getHeaders("Authorization");
+                            if (null == headers
+                                    || headers.length == 0
+                                    || !headers[0].getValue().equals(AUTH_STRING)) {
+                                httpResponse.setStatusCode(401);
+                                httpResponse.setHeader("WWW-Authenticate", "Basic realm=\"TEST\"");
+                            } else {
+                                httpResponse.setEntity(new StringEntity(OK_RESPONSE));
+                            }
+                        }
+                    })
+                    .registerHandler(REDIRECT_URL, new HttpRequestHandler() {
+                        @Override
+                        public void handle(HttpRequest request, HttpResponse response, HttpContext context)
+                                throws HttpException, IOException {
+                            response.setStatusCode(307);
+                            response.setHeader("Location", GET_URL);
+                        }
+                    });
         }
     };
-    
+
     @Test
     public void testValidGet() throws ClientException, URISyntaxException {
         MicrodataHtmlClient client = new MicrodataHtmlClient(httpServer.getURI().toString());

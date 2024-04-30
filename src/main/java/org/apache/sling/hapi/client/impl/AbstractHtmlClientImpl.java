@@ -1,22 +1,26 @@
-/*******************************************************************************
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements. See the NOTICE file
+ * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership. The ASF licenses this file
+ * regarding copyright ownership.  The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
+ * with the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
+ * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- ******************************************************************************/
+ */
 package org.apache.sling.hapi.client.impl;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -46,10 +50,6 @@ import org.apache.sling.hapi.client.HtmlClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 public abstract class AbstractHtmlClientImpl implements HttpClient, HtmlClient {
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractHtmlClientImpl.class);
     protected CloseableHttpClient client;
@@ -61,7 +61,11 @@ public abstract class AbstractHtmlClientImpl implements HttpClient, HtmlClient {
     }
 
     public AbstractHtmlClientImpl(String baseUrl) throws URISyntaxException {
-        this(HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy()).build(), baseUrl);
+        this(
+                HttpClientBuilder.create()
+                        .setRedirectStrategy(new LaxRedirectStrategy())
+                        .build(),
+                baseUrl);
     }
 
     public AbstractHtmlClientImpl(String baseUrl, String user, String password) throws URISyntaxException {
@@ -76,7 +80,6 @@ public abstract class AbstractHtmlClientImpl implements HttpClient, HtmlClient {
                 .setRedirectStrategy(new LaxRedirectStrategy())
                 .build();
     }
-
 
     @Override
     public <T extends Document> T enter(String url) throws ClientException {
@@ -131,15 +134,14 @@ public abstract class AbstractHtmlClientImpl implements HttpClient, HtmlClient {
     @Override
     public abstract <T extends Document> T newDocument(String html);
 
-
     private URI absoluteUri(String url) throws URISyntaxException {
         URI getUrl = new URI(url);
         return this.baseUrl.resolve(getUrl);
     }
 
     /*
-        Overrides of HttpClient methods
-     */
+       Overrides of HttpClient methods
+    */
     @Override
     public HttpParams getParams() {
         return client.getParams();
@@ -156,37 +158,49 @@ public abstract class AbstractHtmlClientImpl implements HttpClient, HtmlClient {
     }
 
     @Override
-    public HttpResponse execute(HttpUriRequest httpUriRequest, HttpContext httpContext) throws IOException, ClientProtocolException {
+    public HttpResponse execute(HttpUriRequest httpUriRequest, HttpContext httpContext)
+            throws IOException, ClientProtocolException {
         return client.execute(httpUriRequest, httpContext);
     }
 
     @Override
-    public HttpResponse execute(HttpHost httpHost, HttpRequest httpRequest) throws IOException, ClientProtocolException {
+    public HttpResponse execute(HttpHost httpHost, HttpRequest httpRequest)
+            throws IOException, ClientProtocolException {
         return client.execute(httpHost, httpRequest);
     }
 
     @Override
-    public HttpResponse execute(HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext) throws IOException, ClientProtocolException {
+    public HttpResponse execute(HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext)
+            throws IOException, ClientProtocolException {
         return client.execute(httpHost, httpRequest, httpContext);
     }
 
     @Override
-    public <T> T execute(HttpUriRequest httpUriRequest, ResponseHandler<? extends T> responseHandler) throws IOException, ClientProtocolException {
+    public <T> T execute(HttpUriRequest httpUriRequest, ResponseHandler<? extends T> responseHandler)
+            throws IOException, ClientProtocolException {
         return client.execute(httpUriRequest, responseHandler);
     }
 
     @Override
-    public <T> T execute(HttpUriRequest httpUriRequest, ResponseHandler<? extends T> responseHandler, HttpContext httpContext) throws IOException, ClientProtocolException {
+    public <T> T execute(
+            HttpUriRequest httpUriRequest, ResponseHandler<? extends T> responseHandler, HttpContext httpContext)
+            throws IOException, ClientProtocolException {
         return client.execute(httpUriRequest, responseHandler, httpContext);
     }
 
     @Override
-    public <T> T execute(HttpHost httpHost, HttpRequest httpRequest, ResponseHandler<? extends T> responseHandler) throws IOException, ClientProtocolException {
+    public <T> T execute(HttpHost httpHost, HttpRequest httpRequest, ResponseHandler<? extends T> responseHandler)
+            throws IOException, ClientProtocolException {
         return client.execute(httpHost, httpRequest, responseHandler);
     }
 
     @Override
-    public <T> T execute(HttpHost httpHost, HttpRequest httpRequest, ResponseHandler<? extends T> responseHandler, HttpContext httpContext) throws IOException, ClientProtocolException {
+    public <T> T execute(
+            HttpHost httpHost,
+            HttpRequest httpRequest,
+            ResponseHandler<? extends T> responseHandler,
+            HttpContext httpContext)
+            throws IOException, ClientProtocolException {
         return client.execute(httpHost, httpRequest, responseHandler, httpContext);
     }
 }

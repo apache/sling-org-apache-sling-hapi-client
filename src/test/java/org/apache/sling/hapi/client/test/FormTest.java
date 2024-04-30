@@ -1,25 +1,22 @@
-/*******************************************************************************
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements. See the NOTICE file
+ * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
- * regarding copyright ownership. The ASF licenses this file
+ * regarding copyright ownership.  The ASF licenses this file
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the
+ * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- ******************************************************************************/
-
+ */
 package org.apache.sling.hapi.client.test;
-
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -45,6 +42,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import static org.hamcrest.core.IsEqual.equalTo;
+
 public class FormTest {
     private static final String GET_URL = "/test1";
     private static final String POST_URL = "/testpost1";
@@ -56,30 +55,33 @@ public class FormTest {
 
         @Override
         protected void registerHandlers() {
-            serverBootstrap.registerHandler(GET_URL, new HttpRequestHandler() {
-                @Override
-                public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
-                        throws HttpException, IOException {
-                    final String html = IOUtils.toString(ItemsTest.class.getResourceAsStream("/items_forms.html"), "UTF-8"); 
-                    HttpEntity entity = new StringEntity(html, "UTF-8");
-                    httpResponse.setEntity(entity);
-                }
-            }).registerHandler(POST_URL, new HttpRequestHandler() {
-                @Override
-                public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
-                        throws HttpException, IOException {
-                    if (!httpRequest.getRequestLine().getMethod().equals("POST")) {
-                        httpResponse.setEntity(new StringEntity(FAIL_RESPONSE));
-                    } else {
-                        httpResponse.setEntity(new StringEntity(OK_RESPONSE));
-                    }
-                    httpResponse.setStatusCode(302);
-                    httpResponse.setHeader("Location", GET_URL);
-                }
-            });
+            serverBootstrap
+                    .registerHandler(GET_URL, new HttpRequestHandler() {
+                        @Override
+                        public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
+                                throws HttpException, IOException {
+                            final String html =
+                                    IOUtils.toString(ItemsTest.class.getResourceAsStream("/items_forms.html"), "UTF-8");
+                            HttpEntity entity = new StringEntity(html, "UTF-8");
+                            httpResponse.setEntity(entity);
+                        }
+                    })
+                    .registerHandler(POST_URL, new HttpRequestHandler() {
+                        @Override
+                        public void handle(HttpRequest httpRequest, HttpResponse httpResponse, HttpContext httpContext)
+                                throws HttpException, IOException {
+                            if (!httpRequest.getRequestLine().getMethod().equals("POST")) {
+                                httpResponse.setEntity(new StringEntity(FAIL_RESPONSE));
+                            } else {
+                                httpResponse.setEntity(new StringEntity(OK_RESPONSE));
+                            }
+                            httpResponse.setStatusCode(302);
+                            httpResponse.setHeader("Location", GET_URL);
+                        }
+                    });
         }
     };
-    
+
     @Test
     public void testForm() throws ClientException, URISyntaxException {
         MicrodataHtmlClient client = new MicrodataHtmlClient(httpServer.getURI().toString());
