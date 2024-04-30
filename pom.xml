@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>org.apache.sling.hapi.client</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>Apache Sling Hypermedia API client-side tools</name>
     <description>Sling client-side tools for HApi</description>
@@ -38,7 +38,7 @@
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-hapi-client.git
         </developerConnection>
         <url>https://github.com/apache/sling-org-apache-sling-hapi-client.git</url>
-      <tag>org.apache.sling.hapi.client-1.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
